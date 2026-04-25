@@ -25,6 +25,9 @@ app.add_middleware(
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+from app.routers import products as products_router
+app.include_router(products_router.router, prefix="/products", tags=["products"])
+
 @app.get("/health")
 async def health():
     return {"status": "ok"}
