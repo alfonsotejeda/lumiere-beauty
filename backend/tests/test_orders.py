@@ -43,5 +43,8 @@ async def test_list_orders_with_auth(client: AsyncClient, auth_headers):
     await client.post("/orders", json={"items": ITEMS, "total": 88.97})
     resp = await client.get("/orders", headers=auth_headers)
     assert resp.status_code == 200
-    assert len(resp.json()) == 1
-    assert resp.json()[0]["status"] == "whatsapp_sent"
+    orders = resp.json()
+    assert len(orders) == 1
+    order = orders[0]
+    assert order["status"] == "whatsapp_sent"
+    assert {"id", "items", "total", "status", "whatsapp_url", "created_at"} <= order.keys()
