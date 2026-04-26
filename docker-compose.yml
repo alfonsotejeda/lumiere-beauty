@@ -41,6 +41,8 @@ services:
       - ./frontend:/app
       - /app/node_modules
     restart: unless-stopped
+    profiles:
+      - full
 
 volumes:
   mongo_data:
