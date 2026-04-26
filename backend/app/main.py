@@ -28,6 +28,9 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 from app.routers import products as products_router
 app.include_router(products_router.router, prefix="/products", tags=["products"])
 
+from app.routers import orders as orders_router
+app.include_router(orders_router.router, prefix="/orders", tags=["orders"])
+
 @app.get("/health")
 async def health():
     return {"status": "ok"}
