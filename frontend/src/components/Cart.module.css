@@ -1,0 +1,161 @@
+/* frontend/src/components/Cart.module.css */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(28, 26, 22, 0.4);
+  z-index: 290;
+}
+
+.panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100dvh;
+  width: 400px;
+  max-width: 100vw;
+  background: var(--warm-white);
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: -4px 0 32px rgba(28, 26, 22, 0.12);
+}
+
+.panel.open { transform: translateX(0); }
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 24px 20px;
+  border-bottom: 1px solid var(--sand);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--dark);
+}
+
+.close {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: var(--mid);
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.warning {
+  background: #FFF8E7;
+  border-bottom: 1px solid #F0D88A;
+  padding: 10px 24px;
+  font-size: 11px;
+  color: #7A6000;
+  letter-spacing: 0.04em;
+}
+
+.empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.emptyHint { font-size: 12px; }
+
+.items {
+  flex: 1;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0 24px;
+}
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--sand);
+  gap: 12px;
+}
+
+.itemInfo { flex: 1; }
+
+.itemName {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+
+.itemSize {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.itemPrice {
+  font-size: 14px;
+  color: var(--accent);
+  font-weight: 400;
+}
+
+.itemControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.itemControls button {
+  background: none;
+  border: 1px solid var(--sand);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--dark);
+  transition: background var(--transition);
+}
+
+.itemControls button:hover { background: var(--sand); }
+
+.remove { color: var(--rose) !important; }
+
+.itemControls span {
+  font-size: 14px;
+  font-weight: 400;
+  min-width: 20px;
+  text-align: center;
+}
+
+.footer {
+  padding: 20px 24px 24px;
+  border-top: 1px solid var(--sand);
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: var(--mid);
+  letter-spacing: 0.06em;
+}
+
+.totalAmount {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--dark);
+}
