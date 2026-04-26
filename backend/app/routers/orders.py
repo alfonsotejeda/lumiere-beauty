@@ -11,11 +11,11 @@ from app.config import settings
 router = APIRouter()
 
 def _build_whatsapp_url(items: list[OrderItem], total: float) -> str:
-    lines = ["Hola Lumière Beauty! 🌿", "", "Quisiera hacer el siguiente pedido:", ""]
+    lines = ["Hola Lumière Beauty!", "", "Quisiera hacer el siguiente pedido:", ""]
     for item in items:
         subtotal = item.price * item.qty
         lines.append(f"• {item.qty}x {item.name} ({item.size}) — ${subtotal:.2f}")
-    lines.extend(["", f"💰 Total estimado: ${total:.2f}", "", "Gracias!"])
+    lines.extend(["", f"Total estimado: ${total:.2f}", "", "Gracias!"])
     message = "\n".join(lines)
     encoded = urllib.parse.quote(message)
     return f"https://wa.me/{settings.whatsapp_number}?text={encoded}"
