@@ -1,26 +1,17 @@
 from datetime import datetime, timezone
-from fastapi import APIRouter, HTTPException, Depends, status
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi import APIRouter, HTTPException, Depends
 from bson import ObjectId
 from app.db import get_db
 from app.cache import cache_get, cache_set, cache_delete
 from app.models.product import ProductCreate, ProductOut, product_from_doc
-from app.config import settings
+from app.dependencies import verify_token
 
 router = APIRouter()
-_security = HTTPBearer()
 
 CACHE_ALL = "products:all"
 
 def _cache_one(pid: str) -> str:
     return f"products:{pid}"
-
-def verify_token(
-    credentials: HTTPAuthorizationCredentials = Depends(_security),
-) -> str:
-    if credentials.credentials != settings.admin_token:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
-    return credentials.credentials
 
 @router.get("", response_model=list[ProductOut])
 async def list_products():

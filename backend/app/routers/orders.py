@@ -1,21 +1,14 @@
 # backend/app/routers/orders.py
 import urllib.parse
 from datetime import datetime, timezone
-from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi import APIRouter, Depends
+
 from app.db import get_db
-from app.models.order import OrderCreate, OrderOut, OrderItem
+from app.models.order import OrderCreate, OrderOut, OrderItem, OrderListItem
+from app.dependencies import verify_token
 from app.config import settings
 
 router = APIRouter()
-_security = HTTPBearer()
-
-def verify_token(
-    credentials: HTTPAuthorizationCredentials = Depends(_security),
-) -> str:
-    if credentials.credentials != settings.admin_token:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
-    return credentials.credentials
 
 def _build_whatsapp_url(items: list[OrderItem], total: float) -> str:
     lines = ["Hola Lumière Beauty! 🌿", "", "Quisiera hacer el siguiente pedido:", ""]
@@ -45,10 +38,12 @@ async def create_order(data: OrderCreate):
         total=data.total,
     )
 
-@router.get("", response_model=list[dict])
+@router.get("", response_model=list[OrderListItem])
 async def list_orders(_: str = Depends(verify_token)):
     db = get_db()
     docs = await db.orders.find().sort("created_at", -1).to_list(length=50)
+    result = []
     for doc in docs:
-        doc["_id"] = str(doc["_id"])
-    return docs
+        doc["id"] = str(doc.pop("_id"))
+        result.append(OrderListItem(**doc))
+    return result
