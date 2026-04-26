@@ -22,6 +22,7 @@ export default function ProductCard({ product }) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
+          // 'visible' matches the global .fade-in.visible rule in index.css
           el.classList.add('visible')
           observer.unobserve(el)
         }

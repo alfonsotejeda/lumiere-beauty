@@ -5,7 +5,7 @@ import styles from './Cart.module.css'
 
 export default function Cart({ isOpen, onClose }) {
   const items = useCartStore((s) => s.items)
-  const getTotal = useCartStore((s) => s.getTotal)
+  const total = useCartStore((s) => s.getTotal())
   const removeItem = useCartStore((s) => s.removeItem)
   const updateQty = useCartStore((s) => s.updateQty)
 
@@ -48,7 +48,7 @@ export default function Cart({ isOpen, onClose }) {
             <div className={styles.footer}>
               <div className={styles.total}>
                 <span>Total estimado</span>
-                <span className={styles.totalAmount}>${getTotal().toFixed(2)}</span>
+                <span className={styles.totalAmount}>${total.toFixed(2)}</span>
               </div>
               <CheckoutButton onClose={onClose} />
             </div>

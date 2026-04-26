@@ -130,7 +130,7 @@
 
 .itemControls button:hover { background: var(--sand); }
 
-.remove { color: var(--rose) !important; }
+.itemControls .remove { color: var(--rose); }
 
 .itemControls span {
   font-size: 14px;

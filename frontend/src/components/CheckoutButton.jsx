@@ -8,7 +8,7 @@ export default function CheckoutButton({ onClose }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const items = useCartStore((s) => s.items)
-  const getTotal = useCartStore((s) => s.getTotal)
+  const total = useCartStore((s) => s.getTotal())
   const clearCart = useCartStore((s) => s.clearCart)
 
   const handleCheckout = async () => {
@@ -16,7 +16,7 @@ export default function CheckoutButton({ onClose }) {
     setLoading(true)
     setError(null)
     try {
-      const { whatsapp_url } = await createOrder(items, getTotal())
+      const { whatsapp_url } = await createOrder(items, total)
       clearCart()
       onClose()
       window.open(whatsapp_url, '_blank', 'noopener')
@@ -29,7 +29,7 @@ export default function CheckoutButton({ onClose }) {
 
   return (
     <div>
-      {error && <p className={styles.error}>{error}</p>}
+      {error && <p className={styles.error} role="alert">{error}</p>}
       <button
         className={styles.btn}
         onClick={handleCheckout}
